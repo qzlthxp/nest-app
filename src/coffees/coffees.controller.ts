@@ -1,14 +1,17 @@
+import { CoffeesService } from './coffees.service';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
+  Query,
   Res,
 } from '@nestjs/common';
-import { response } from 'express';
 
 /**
  * @Controller('coffees') controller装饰器的第一个参数表示路由
@@ -20,6 +23,8 @@ import { response } from 'express';
 
 @Controller('coffees')
 export class CoffeesController {
+  constructor(private readonly coffeesService: CoffeesService) {}
+
   // 成功的状态码是200 /coffees
   @Get()
   getCoffees(@Res() response) {
@@ -28,8 +33,10 @@ export class CoffeesController {
 
   // /coffees/flavors
   @Get('flavors')
-  findAll() {
-    return 'This action returns all coffees';
+  findAll(@Query() paginationQuery) {
+    return this.coffeesService.findAll(paginationQuery)
+    // const { limit, offset } = paginationQuery
+    // return `This action returns all coffees. Limit: ${limit}, offset: ${offset}`;
   }
 
   // 动态路由，路由参数 /coffees/123
@@ -38,7 +45,8 @@ export class CoffeesController {
   //   return `This action returns ${params.id} coffee`;
   // }
   findOne(@Param('id') id: string) {
-    return `This action returns #${id} coffee`;
+    return this.coffeesService.findOne(id)
+    // return `This action returns #${id} coffee`;
   }
 
   // post请求 默认成功的状态码是201 /coffees
@@ -49,6 +57,19 @@ export class CoffeesController {
   //   return body;
   // }
   create(@Body() body) {
-    return body;
+    return this.coffeesService.create(body)
+    // return body;
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string,@Body() body) {
+    return this.coffeesService.update(id, body)
+    // return `This action updates #${id} coffee & name is ${body.name}`
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.coffeesService.remove(id)
+    // return `This action removes #${id} coffee`
   }
 }
