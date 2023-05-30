@@ -1,3 +1,5 @@
+import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
+import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 import { CoffeesService } from './coffees.service';
 import {
   Body,
@@ -34,7 +36,7 @@ export class CoffeesController {
   // /coffees/flavors
   @Get('flavors')
   findAll(@Query() paginationQuery) {
-    return this.coffeesService.findAll(paginationQuery)
+    return this.coffeesService.findAll(paginationQuery);
     // const { limit, offset } = paginationQuery
     // return `This action returns all coffees. Limit: ${limit}, offset: ${offset}`;
   }
@@ -44,32 +46,32 @@ export class CoffeesController {
   // findOne(@Param() params) {
   //   return `This action returns ${params.id} coffee`;
   // }
-  findOne(@Param('id') id: string) {
-    return this.coffeesService.findOne(id)
+  findOne(@Param('id') id: number) {
+    return this.coffeesService.findOne('' + id);
     // return `This action returns #${id} coffee`;
   }
 
   // post请求 默认成功的状态码是201 /coffees
   @Post()
-  @HttpCode(HttpStatus.GONE)
+  // @HttpCode(HttpStatus.GONE)
   // 只会获取 name 对应的数据，谨慎使用因为不会对其他数据进行验证
   // create(@Body('name') body) {
   //   return body;
   // }
-  create(@Body() body) {
-    return this.coffeesService.create(body)
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    return this.coffeesService.create(createCoffeeDto);
     // return body;
   }
 
   @Patch(':id')
-  update(@Param('id') id: string,@Body() body) {
-    return this.coffeesService.update(id, body)
+  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+    return this.coffeesService.update(id, updateCoffeeDto);
     // return `This action updates #${id} coffee & name is ${body.name}`
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.coffeesService.remove(id)
+    return this.coffeesService.remove(id);
     // return `This action removes #${id} coffee`
   }
 }
