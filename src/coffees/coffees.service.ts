@@ -18,7 +18,9 @@ export class CoffeesService {
   ) {}
 
   findAll(paginationQuery: { limit: string; offset: string }) {
-    return this.coffeeRepository.find();
+    return this.coffeeRepository.find({
+      relations: ['flavors'],
+    });
   }
 
   async findOne(id: string) {
@@ -26,6 +28,7 @@ export class CoffeesService {
       where: {
         id: +id,
       },
+      relations: ['flavors'],
     });
     if (!coffee) {
       throw new NotFoundException(`Coffee #${id} not found`);
