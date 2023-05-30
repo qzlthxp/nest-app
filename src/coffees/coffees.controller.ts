@@ -33,8 +33,8 @@ export class CoffeesController {
     response.status(200).send('coffees');
   }
 
-  // /coffees/flavors
-  @Get('flavors')
+  // /coffees/all
+  @Get('all')
   findAll(@Query() paginationQuery) {
     return this.coffeesService.findAll(paginationQuery);
     // const { limit, offset } = paginationQuery
