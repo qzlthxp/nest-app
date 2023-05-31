@@ -1,3 +1,4 @@
+import { PaginationQueryDto } from './../common/dto/pagination-query.dto/pagination-query.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
 import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 import { CoffeesService } from './coffees.service';
@@ -35,7 +36,7 @@ export class CoffeesController {
 
   // /coffees/all
   @Get('all')
-  findAll(@Query() paginationQuery) {
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.coffeesService.findAll(paginationQuery);
     // const { limit, offset } = paginationQuery
     // return `This action returns all coffees. Limit: ${limit}, offset: ${offset}`;
